@@ -938,44 +938,45 @@
 // @section calibrate
 
 /**
- * Choose one of the options below to enable G29 Bed Leveling. The parameters
- * and behavior of G29 will change depending on your selection.
- *
- *  If using a Probe for Z Homing, enable Z_SAFE_HOMING also!
- *
- * - AUTO_BED_LEVELING_3POINT
- *   Probe 3 arbitrary points on the bed (that aren't collinear)
- *   You specify the XY coordinates of all 3 points.
- *   The result is a single tilted plane. Best for a flat bed.
- *
- * - AUTO_BED_LEVELING_LINEAR
- *   Probe several points in a grid.
- *   You specify the rectangle and the density of sample points.
- *   The result is a single tilted plane. Best for a flat bed.
- *
- * - AUTO_BED_LEVELING_BILINEAR
- *   Probe several points in a grid.
- *   You specify the rectangle and the density of sample points.
- *   The result is a mesh, best for large or uneven beds.
- *
- * - AUTO_BED_LEVELING_UBL (Unified Bed Leveling)
- *   A comprehensive bed leveling system combining the features and benefits
- *   of other systems. UBL also includes integrated Mesh Generation, Mesh
- *   Validation and Mesh Editing systems.
- *
- * - MESH_BED_LEVELING
- *   Probe a grid manually
- *   The result is a mesh, suitable for large or uneven beds. (See BILINEAR.)
- *   For machines without a probe, Mesh Bed Leveling provides a method to perform
- *   leveling in steps so you can manually adjust the Z height at each grid-point.
- *   With an LCD controller the process is guided step-by-step.
- */
-//#define AUTO_BED_LEVELING_3POINT
-//#define AUTO_BED_LEVELING_LINEAR
-#define AUTO_BED_LEVELING_BILINEAR
-//#define AUTO_BED_LEVELING_UBL
-//#define MESH_BED_LEVELING
+   Choose one of the options below to enable G29 Bed Leveling. The parameters
+   and behavior of G29 will change depending on your selection.
 
+    If using a Probe for Z Homing, enable Z_SAFE_HOMING also!
+
+   - AUTO_BED_LEVELING_3POINT
+     Probe 3 arbitrary points on the bed (that aren't collinear)
+     You specify the XY coordinates of all 3 points.
+     The result is a single tilted plane. Best for a flat bed.
+
+   - AUTO_BED_LEVELING_LINEAR
+     Probe several points in a grid.
+     You specify the rectangle and the density of sample points.
+     The result is a single tilted plane. Best for a flat bed.
+
+   - AUTO_BED_LEVELING_BILINEAR
+     Probe several points in a grid.
+     You specify the rectangle and the density of sample points.
+     The result is a mesh, best for large or uneven beds.
+
+   - AUTO_BED_LEVELING_UBL (Unified Bed Leveling)
+     A comprehensive bed leveling system combining the features and benefits
+     of other systems. UBL also includes integrated Mesh Generation, Mesh
+     Validation and Mesh Editing systems.
+
+   - MESH_BED_LEVELING
+     Probe a grid manually
+     The result is a mesh, suitable for large or uneven beds. (See BILINEAR.)
+     For machines without a probe, Mesh Bed Leveling provides a method to perform
+     leveling in steps so you can manually adjust the Z height at each grid-point.
+     With an LCD controller the process is guided step-by-step.
+*/
+#ifdef BLTOUCH
+  //#define AUTO_BED_LEVELING_3POINT
+  //#define AUTO_BED_LEVELING_LINEAR
+  #define AUTO_BED_LEVELING_BILINEAR
+  //#define AUTO_BED_LEVELING_UBL
+  //#define MESH_BED_LEVELING
+#endif
 /**
  * Normally G28 leaves leveling disabled on completion. Enable
  * this option to have G28 restore the prior leveling state.
