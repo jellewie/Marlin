@@ -15277,6 +15277,11 @@ void setup() {
   #if ENABLED(SDSUPPORT) && DISABLED(ULTRA_LCD)
     card.beginautostart();
   #endif
+
+  /* power on init. sd card */
+  #if ENABLED(SDSUPPORT)
+    if (!card.cardOK) card.initsd();
+  #endif
 }
 
 /**
