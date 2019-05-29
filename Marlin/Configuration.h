@@ -726,8 +726,8 @@
  */
 #define BLTOUCH
 #if ENABLED(BLTOUCH)
-  #define SERVO0_PIN 29
-  //#define BLTOUCH_DELAY 375   // (ms) Enable and increase if needed
+#define SERVO0_PIN 27
+//#define BLTOUCH_DELAY 375   // (ms) Enable and increase if needed
 #endif
 /**
  * Enable one or more of the following if probing seems unreliable.
