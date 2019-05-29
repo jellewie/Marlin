@@ -45,13 +45,11 @@
 #undef LCD_PINS_D5
 #undef LCD_PINS_D6
 #undef LCD_PINS_D7
-#undef FIL_RUNOUT_PIN
 
 #define LCD_SDSS           31   // Smart Controller SD card reader (rather than the Melzi)
 #define LCD_PINS_RS        28   // ST9720 CS
 #define LCD_PINS_ENABLE    17   // ST9720 DAT
 #define LCD_PINS_D4        30   // ST9720 CLK
-#define FIL_RUNOUT_PIN     -1   // Uses Beeper/LED Pin Pulled to GND
 
 // Alter timing for graphical display
 #ifndef ST7920_DELAY_1
@@ -70,6 +68,9 @@
 #endif
 
 /**
+ * pcint31=Z_STEP_PIN?
+ * pcint5 =X_STEP_PIN?
+ * 
   PIN:   0   Port: B0        E0_DIR_PIN                  protected
   PIN:   1   Port: B1        E0_STEP_PIN                 protected
   PIN:   2   Port: B2        Z_DIR_PIN                   protected
@@ -97,15 +98,15 @@
   .                          SCL                         Input  = 1
   PIN:  17   Port: C1        LCD_PINS_ENABLE             Output = 0
   .                          SDA                         Output = 0
-  PIN:  18   Port: C2        X_MIN_PIN                   protected
-  .                          X_STOP_PIN                  protected
-  PIN:  19   Port: C3        Y_MIN_PIN                   protected
-  .                          Y_STOP_PIN                  protected
-  PIN:  20   Port: C4        Z_MIN_PIN                   protected
-  .                          Z_STOP_PIN                  protected
-  PIN:  21   Port: C5        X_DIR_PIN                   protected
-  PIN:  22   Port: C6        Y_STEP_PIN                  protected
-  PIN:  23   Port: C7        Y_DIR_PIN                   protected
+   PIN:  18   Port: C2        X_MIN_PIN                   protected
+   .                          X_STOP_PIN                  protected
+   PIN:  19   Port: C3        Y_MIN_PIN                   protected
+   .                          Y_STOP_PIN                  protected
+   PIN:  20   Port: C4        Z_MIN_PIN                   protected
+   .                          Z_STOP_PIN                  protected
+   PIN:  21   Port: C5        X_DIR_PIN                   protected
+   PIN:  22   Port: C6        Y_STEP_PIN                  protected
+   PIN:  23   Port: C7        Y_DIR_PIN                   protected
   PIN:  24   Port: A7        TEMP_0_PIN                  protected
   PIN:  25   Port: A6        TEMP_BED_PIN                protected
   PIN:  26   Port: A5        Z_ENABLE_PIN                protected
