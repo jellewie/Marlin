@@ -166,9 +166,7 @@
         // Pin 27 is taken by LED_PIN, but Melzi LED does nothing with
         // Marlin so this can be used for BEEPER_PIN. You can use this pin
         // with M42 instead of BEEPER_PIN.
-        #ifdef SPEAKER 
-          #define BEEPER_PIN      27
-        #endif
+        #define BEEPER_PIN      27
       #else        // Sanguinololu >=1.3
         #define LCD_PINS_RS      4
         #define LCD_PINS_ENABLE 17
@@ -185,17 +183,13 @@
 
       #if ENABLED(MAKRPANEL)
 
-        #ifdef SPEAKER 
-          #define BEEPER_PIN      29
-        #endif
+        #define BEEPER_PIN      29
         #define DOGLCD_CS       17
         #define LCD_BACKLIGHT_PIN 28   // PA3
 
       #elif ENABLED(IS_MELZI)
 
-        #ifdef SPEAKER 
-          #define BEEPER_PIN      27
-        #endif
+        #define BEEPER_PIN      27
         #define DOGLCD_CS       28
 
       #else // !MAKRPANEL

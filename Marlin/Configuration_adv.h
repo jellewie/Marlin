@@ -75,8 +75,8 @@
  * THERMAL_PROTECTION_HYSTERESIS and/or THERMAL_PROTECTION_PERIOD
  */
 #if ENABLED(THERMAL_PROTECTION_HOTENDS)
-  #define THERMAL_PROTECTION_PERIOD 20        // Seconds
-  #define THERMAL_PROTECTION_HYSTERESIS 2     // Degrees Celsius
+  #define THERMAL_PROTECTION_PERIOD 40        // Seconds
+  #define THERMAL_PROTECTION_HYSTERESIS 4     // Degrees Celsius
 
   /**
    * Whenever an M104, M109, or M303 increases the target temperature, the
@@ -394,6 +394,65 @@
 // Enable this if X or Y can't home without homing the other axis first.
 //#define CODEPENDENT_XY_HOMING
 
+#if ENABLED(BLTOUCH)
+  /**
+   * Either: Use the defaults (recommended) or: For special purposes, use the following DEFINES
+   * Do not activate settings that the probe might not understand. Clones might misunderstand
+   * advanced commands.
+   *
+   * Note: If the probe is not deploying, check a "Cmd: Reset" and "Cmd: Self-Test" and then
+   *       check the wiring of the BROWN, RED and ORANGE wires.
+   *
+   * Note: If the trigger signal of your probe is not being recognized, it has been very often
+   *       because the BLACK and WHITE wires needed to be swapped. They are not "interchangeable"
+   *       like they would be with a real switch. So please check the wiring first.
+   *
+   * Settings for all BLTouch and clone probes:
+   */
+
+  // Safety: The probe needs time to recognize the command.
+  //         Minimum command delay (ms). Enable and increase if needed.
+  //#define BLTOUCH_DELAY 500
+
+  /**
+   * Settings for BLTOUCH Classic 1.2, 1.3 or BLTouch Smart 1.0, 2.0, 2.2, 3.0, 3.1, and most clones:
+   */
+
+  // Feature: Switch into SW mode after a deploy. It makes the output pulse longer. Can be useful
+  //          in special cases, like noisy or filtered input configurations.
+  //#define BLTOUCH_FORCE_SW_MODE
+
+  /**
+   * Settings for BLTouch Smart 3.0 and 3.1
+   * Summary:
+   *   - Voltage modes: 5V and OD (open drain - "logic voltage free") output modes
+   *   - High-Speed mode
+   *   - Disable LCD voltage options
+   */
+
+  /**
+   * Danger: Don't activate 5V mode unless attached to a 5V-tolerant controller!
+   * V3.0 or 3.1: Set default mode to 5V mode at Marlin startup.
+   * If disabled, OD mode is the hard-coded default on 3.0
+   * On startup, Marlin will compare its eeprom to this vale. If the selected mode
+   * differs, a mode set eeprom write will be completed at initialization.
+   * Use the option below to force an eeprom write to a V3.1 probe regardless.
+   */
+  //#define BLTOUCH_SET_5V_MODE
+
+  /**
+   * Safety: Activate if connecting a probe with an unknown voltage mode.
+   * V3.0: Set a probe into mode selected above at Marlin startup. Required for 5V mode on 3.0
+   * V3.1: Force a probe with unknown mode into selected mode at Marlin startup ( = Probe EEPROM write )
+   * To preserve the life of the probe, use this once then turn it off and re-flash.
+   */
+  //#define BLTOUCH_FORCE_MODE_SET
+
+  // Safety: Enable voltage mode settings in the LCD menu.
+  //#define BLTOUCH_LCD_VOLTAGE_MENU
+
+#endif // BLTOUCH
+
 // @section machine
 
 #define AXIS_RELATIVE_MODES {false, false, false, false}
@@ -424,7 +483,7 @@
 // @section lcd
 
 #if ENABLED(ULTIPANEL)
-  #define MANUAL_FEEDRATE {50*60, 50*60, 4*60, 0} // Feedrates for manual moves along X, Y, Z, E from panel
+  #define MANUAL_FEEDRATE {50*60, 50*60, 4*60, 60} // Feedrates for manual moves along X, Y, Z, E from panel
   #define ULTIPANEL_FEEDMULTIPLY  // Comment to disable setting feedrate multiplier via encoder
 #endif
 
@@ -980,7 +1039,7 @@
  */
 #define ADVANCED_PAUSE_FEATURE
 #if ENABLED(ADVANCED_PAUSE_FEATURE)
-  #define PAUSE_PARK_RETRACT_FEEDRATE         65  // (mm/s) Initial retract feedrate.
+  #define PAUSE_PARK_RETRACT_FEEDRATE         60  // (mm/s) Initial retract feedrate.
   #define PAUSE_PARK_RETRACT_LENGTH           8   // (mm) Initial retract.
                                                   // This short retract is done immediately, before parking the nozzle.
   #define FILAMENT_CHANGE_UNLOAD_FEEDRATE     65  // (mm/s) Unload filament feedrate. This can be pretty fast.
@@ -1007,9 +1066,9 @@
                                                   // Filament Unload does a Retract, Delay, and Purge first:
   #define FILAMENT_UNLOAD_RETRACT_LENGTH      13  // (mm) Unload initial retract length.
   #define FILAMENT_UNLOAD_DELAY             5000  // (ms) Delay for the filament to cool after retract.
-  #define FILAMENT_UNLOAD_PURGE_LENGTH        10  // (mm) An unretract is done, then this length is purged.
+  #define FILAMENT_UNLOAD_PURGE_LENGTH         8  // (mm) An unretract is done, then this length is purged.
 
-  #define PAUSE_PARK_NOZZLE_TIMEOUT           60  // (seconds) Time limit before the nozzle is turned off for safety.
+  #define PAUSE_PARK_NOZZLE_TIMEOUT           45  // (seconds) Time limit before the nozzle is turned off for safety.
 //  #define FILAMENT_CHANGE_ALERT_BEEPS         10  // Number of alert beeps to play when a response is needed.
   #define PAUSE_PARK_NO_STEPPER_TIMEOUT           // Enable for XYZ steppers to stay powered on during filament change.
 
@@ -1074,7 +1133,7 @@
   #define E4_SENSE_RESISTOR   91
   #define E4_MICROSTEPS       16
 
-#endif
+#endif // TMC26X
 
 // @section tmc_smart
 
@@ -1302,7 +1361,7 @@
   #define E4_OVERCURRENT  2000
   #define E4_STALLCURRENT 1500
 
-#endif
+#endif // L6470
 
 /**
  * TWI/I2C BUS
@@ -1484,17 +1543,17 @@
 /**
  * User-defined menu items that execute custom GCode
  */
-//#define CUSTOM_USER_MENUS
+#define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
   #define USER_SCRIPT_DONE "M117 User Script Done"
   #define USER_SCRIPT_AUDIBLE_FEEDBACK
   //#define USER_SCRIPT_RETURN  // Return to status screen after a script
 
-//  #define USER_DESC_1 "Home & UBL Info"
-//  #define USER_GCODE_1 "G28\nG29 W"
+  #define USER_DESC_1 "PLA1"
+  #define USER_GCODE_1 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
 
-  #define USER_DESC_2 "Preheat for PLA"
-  #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_1_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_1_TEMP_HOTEND)
+  #define USER_DESC_2 "PLA2"
+  #define USER_GCODE_2 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
 
 //  #define USER_DESC_3 "Preheat for ABS"
 //  #define USER_GCODE_3 "M140 S" STRINGIFY(PREHEAT_2_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_2_TEMP_HOTEND)
