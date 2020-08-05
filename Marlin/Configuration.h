@@ -733,7 +733,9 @@
  */
 #define BLTOUCH
 #if ENABLED(BLTOUCH)
-#define SERVO0_PIN 27
+#define SERVO0_PIN 29
+//29 = EXTRA PIN
+//27 =  10P HEADER
 //#define BLTOUCH_DELAY 375   // (ms) Enable and increase if needed
 #endif
 /**
@@ -931,7 +933,7 @@
  * For other boards you may need to define FIL_RUNOUT_PIN, FIL_RUNOUT2_PIN, etc.
  * By default the firmware assumes HIGH=FILAMENT PRESENT.
  */
-#define FILAMENT_RUNOUT_SENSOR
+//#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
 #define NUM_RUNOUT_SENSORS   1     // Number of sensors, up to one per extruder. Define a FIL_RUNOUT#_PIN for each.
 #define FIL_RUNOUT_INVERTING true  // set to true to invert the logic of the sensor.
@@ -1230,7 +1232,7 @@
 // M502 - reverts to the default "factory settings".  You still need to store them in EEPROM afterwards if you want to.
 //
 #define EEPROM_SETTINGS // Enable for M500 and M501 commands
-#define DISABLE_M503    // Saves ~2700 bytes of PROGMEM. Disable for release!.  Disable for it to work, enable to block commands
+//#define DISABLE_M503    // Saves ~2700 bytes of PROGMEM. Disable for release!.  Disable for it to work, enable to block commands
 //#define EEPROM_CHITCHAT   // Give feedback on EEPROM commands. Disable to save PROGMEM.
 
 //
@@ -1507,12 +1509,12 @@
 //#define INDIVIDUAL_AXIS_HOMING_MENU
 
 //
-// SPEAKER/BUZZER
+// SPEAKER/BUZZER/BEEPER
 //
 // If you have a speaker that can produce tones, enable it here.
 // By default Marlin assumes you have a buzzer with a fixed frequency.
 //
-//#define SPEAKER
+//#define SPEAKER   //I always search for '#define BEEPER ' if I need to find this line
 
 //
 // The duration and frequency for the UI feedback sound.
